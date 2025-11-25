@@ -1,0 +1,88 @@
+
+
+[
+  {
+    "title": "HTML",
+    "image": "HTML.svg",
+    "description": "Linguagem base para estruturar páginas web.",
+    "rating": 5
+  },
+  {
+    "title": "CSS",
+    "image": "CSS.svg",
+    "description": "Responsável pelo estilo e layout das páginas.",
+    "rating": 4
+  },
+  {
+    "title": "Tailwind CSS",
+    "image": "TAILWIND.svg",
+    "description": "Framework utilitária de CSS para desenvolvimento rápido.",
+    "rating": 5
+  },
+  {
+    "title": "JavaScript",
+    "image": "JAVASCRIPT.svg",
+    "description": "Linguagem de programação essencial para o front-end moderno.",
+    "rating": 5
+  },
+  {
+    "title": "TypeScript",
+    "image": "TYPESCRIPT.svg",
+    "description": "Superset do JavaScript com tipagem estática.",
+    "rating": 4
+  },
+  {
+    "title": "JSON",
+    "image": "JSON.svg",
+    "description": "Formato leve para troca de dados.",
+    "rating": 5
+  },
+  {
+    "title": "API RESTful",
+    "image": "APIREST-svg",
+    "description": "Estilo arquitetural para criação de APIs.",
+    "rating": 4
+  },
+  {
+    "title": "Swagger",
+    "image": "SWAGGER.svg",
+    "description": "Ferramenta para documentação interativa de APIs.",
+    "rating": 4
+  },
+  {
+    "title": "GitHub",
+    "image": "GITHUB.svg",
+    "description": "Plataforma de versionamento e colaboração de código.",
+    "rating": 5
+  },
+  {
+    "title": "Codespaces",
+    "image": "CODESPACES.svg",
+    "description": "Ambiente de desenvolvimento na cloud da GitHub.",
+    "rating": 3
+  },
+  {
+    "title": "GitHub Pages",
+    "image": "GITHUBPAGES.svg",
+    "description": "Hospedagem gratuita de websites estáticos.",
+    "rating": 4
+  },
+  {
+    "title": "React.js",
+    "image": "REACT.svg",
+    "description": "Biblioteca JavaScript para construção de interfaces.",
+    "rating": 5
+  },
+  {
+    "title": "Next.js",
+    "image": "NEXT.svg",
+    "description": "Framework React para renderização rápida e rotas automáticas.",
+    "rating": 5
+  },
+  {
+    "title": "Vercel",
+    "image": "VERCEL.svg",
+    "description": "Plataforma usada para deploy de aplicações Next.js.",
+    "rating": 4
+  }
+]
