@@ -1,28 +1,21 @@
-import React from 'react'
-import tecnologiasJson from '@/app/data/tecnologias.json';
-import Image from 'next/image'
+import TecnologiasJson from "@/app/data/tecnologias.json";
+import TecnologiaCard from "@/components/TecnologiaCard/TecnologiasCard";
 
-const tecnologias = JSON.parse(JSON.stringify(tecnologiasJson))
-
-export default function page() {
+export default function PageTecnologias() {
   return (
-    <div>
-      <h2>Tecnologias que aprendi</h2>
+    <main className="p-8">
+      <h1 className="text-2xl font-bold mb-6">Tecnologias</h1>
 
-      {tecnologias.map((tec: any) => (
-        <div key={tec.title}>
-          <h3>{tec.title}</h3>
-
-          <Image
-            src={`/tecnologias/${tec.image}`} // ficheiros svg em public/tecnologias/
-            alt={`Logotipo de ${tec.title}`}
-            width={200}
-            height={200}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        {TecnologiasJson.map((tec: any, index: number) => (
+          <TecnologiaCard 
+            key={tec.title}
+            title={tec.title}
+            image={tec.image}
+            index={index}
           />
-
-          <p>{tec.description}</p>
-        </div>
-      ))}
-    </div>
-  )
+        ))}
+      </div>
+    </main>
+  );
 }
