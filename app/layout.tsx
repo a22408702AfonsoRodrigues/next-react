@@ -41,6 +41,7 @@ export default function RootLayout({
             <Link href="/tecnologias">Tecnologias</Link>
             <Link href="/projetos">Projetos</Link>
             <Link href="/contador">Contador</Link>
+            <Link href="/produtos">Produtos</Link>
           </nav>
         </header>
 

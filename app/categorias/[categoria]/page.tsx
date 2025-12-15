@@ -10,13 +10,13 @@ const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function ProdutosPorCategoriaPage() {
     const params = useParams<{ categoria: string }>();
-    
     const categoriaNome = decodeURIComponent(params.categoria);
 
     const { data, error, isLoading } = useSWR<Product[]>('https://deisishop.pythonanywhere.com/products', fetcher);
 
     const produtosFiltrados = data?.filter(prod => prod.category === categoriaNome);
 
+    if (error) return <div>Erro ao carregar produtos.</div>;
     if (isLoading) return <div>A carregar produtos da categoria...</div>;
 
     return (
@@ -29,11 +29,21 @@ export default function ProdutosPorCategoriaPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {produtosFiltrados.map((product) => (
                         <div key={product.id} className="bg-white p-4 rounded-xl shadow border flex flex-col items-center">
+                            
                             <div className="relative w-full h-40 mb-4">
-                                <Image src={product.image} alt={product.title} fill className="object-contain"/>
+                                <Image 
+                                    src={product.image.startsWith('http') ? product.image : `https://deisishop.pythonanywhere.com${product.image}`}
+                                    alt={product.title} 
+                                    fill 
+                                    className="object-contain"
+                                />
                             </div>
+                            
                             <h3 className="font-bold text-sm text-center line-clamp-2 h-10 mb-2">{product.title}</h3>
-                            <p className="text-green-600 font-bold">{product.price.toFixed(2)} €</p>
+                            
+                            <p className="text-green-600 font-bold">
+                                {Number(product.price).toFixed(2)} €
+                            </p>
                             
                             <Link href={`/produtos/${product.id}`} className="mt-4">
                                 <button className="text-blue-600 text-sm font-bold hover:underline">
