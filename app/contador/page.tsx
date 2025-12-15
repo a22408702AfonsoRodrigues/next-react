@@ -1,8 +1,9 @@
-import ContadorLab10 from '@/components/ContadorLab10/ContadorLab10'
+import Contador from '@/components/Contador/Contador'
 
 export default function ContadorPage() {
     return (
         <>
+            <Contador />
         </>
     )
 }

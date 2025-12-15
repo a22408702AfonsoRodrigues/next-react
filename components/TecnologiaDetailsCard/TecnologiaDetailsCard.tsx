@@ -1,3 +1,5 @@
+import ContadorPersonalizado from "../ContadorPersonalizado/ContadorPersonalizado"
+
 interface TecnologiaDetailsCardProps {
     title: string
     image: string
@@ -24,6 +26,9 @@ export default function TecnologiasDetailsCard({title,image,description,rating}:
         <p className="text-gray-700 text-center">{description}</p>
 
         <p className="text-gray-700 text-center">{rating}</p>
+
+        <p className="text-gray-700 text-center"><ContadorPersonalizado title={title} /></p>
+
         
       </article>
     )
