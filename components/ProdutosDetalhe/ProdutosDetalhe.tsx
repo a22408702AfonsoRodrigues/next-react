@@ -42,6 +42,10 @@ export default function ProdutoDetalhe({ product }: { product: Product }) {
                 >
                     Adicionar ao Carrinho
                 </button>
+
+                <button className="w-full bg-gray-500 text-black py-2 rounded">
+                    Favorito🤍
+                </button>
                 
                 <Link href="/produtos" className="text-blue-600 font-bold hover:underline mt-4 text-center md:text-left">
                     ← Voltar à Lista

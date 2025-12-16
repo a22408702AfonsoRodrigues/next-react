@@ -7,6 +7,7 @@ import ProdutoCard from '@/components/ProdutoCard/ProdutoCard'
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function ProdutosPage() {
+    const [isFavorite, setIsFavorite] = useState(false);
     const { data, error, isLoading } = useSWR<Product[]>('https://deisishop.pythonanywhere.com/products', fetcher);
 
     const [search, setSearch] = useState("");
@@ -123,6 +124,7 @@ export default function ProdutosPage() {
                         <option value="preco-asc">Preço (Crescente)</option>
                         <option value="preco-desc">Preço (Decrescente)</option>
                     </select>
+
                 </div>
 
                 <div className="text-blue-500 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
