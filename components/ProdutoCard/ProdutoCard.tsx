@@ -6,37 +6,41 @@ import { Product } from '@/models/interfaces'
 
 export default function ProdutoCard(props: Product) {
     
-    const [isFavorite, setIsFavorite] = useState(false)
+    const [favorito, setFavorito] = useState(false)
 
     const imgUrl = props.image.startsWith('http') ? props.image : `https://deisishop.pythonanywhere.com${props.image}`;
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const storedFavorites = localStorage.getItem('favoritos');
-            
-            if (storedFavorites) {
-                const favoritesArray = JSON.parse(storedFavorites);
-                if (favoritesArray.includes(props.id)) {
-                    setIsFavorite(true);
-                }
-            }
+        const listaFavoritos = JSON.parse(localStorage.getItem('favoritos') || '[]')
+        setFavorito(listaFavoritos.includes(props.id))
+    }, [props.id])
+
+
+
+    const toggleFavorito = () => {
+        let listaFavoritos = JSON.parse(localStorage.getItem('favoritos') || '[]')
+
+    if (listaFavoritos.includes(props.id)){
+        listaFavoritos = listaFavoritos.filter((id:number) => id !== props.id)
+    } else {
+        listaFavoritos.push(props.id)
+    }
+
+    localStorage.setItem('favoritos', JSON.stringify(listaFavoritos))
+    setFavorito(!favorito)
+    }
+
+    const adicionaAoHistorico = () => {
+        let historico = JSON.parse(localStorage.getItem('recentes') || '[]')
+
+        historico.unshift(props.id)
+
+        if (historico.length > 5) {
+            historico.pop()
         }
-    }, [props.id]);
 
-    const toggleFavorite = () => {
-        const storedFavorites = localStorage.getItem('favoritos');
-        let favoritesArray: number[] = storedFavorites ? JSON.parse(storedFavorites) : [];
-
-        if (isFavorite) {
-            favoritesArray = favoritesArray.filter(id => id !== props.id);
-            setIsFavorite(false);
-        } else {
-            favoritesArray.push(props.id);
-            setIsFavorite(true);
-        }
-
-        localStorage.setItem('favoritos', JSON.stringify(favoritesArray));
-    };
+        localStorage.setItem('recentes', JSON.stringify(historico))
+    }
 
     return (
         <article className="bg-white p-4 rounded-xl shadow-md flex flex-col items-center transition hover:scale-105">
@@ -60,17 +64,19 @@ export default function ProdutoCard(props: Product) {
             
 
             <Link href={`/produtos/${props.id}`} className="w-full">
-                <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                <button 
+                    className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+                    onClick={adicionaAoHistorico}
+                    >
                     Ver Detalhes
                 </button>
             </Link>
 
             <button 
-                onClick={toggleFavorite}
+                onClick={toggleFavorito}
                 className="bg-grey-500 text-black"
-                title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
             >
-                {isFavorite ? 'Favorito ❤️' : 'Favorito 🤍'} 
+                {favorito ? 'Favorito ❤️' : 'Favorito 🤍'} 
             </button>
         </article>
     )

@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react'
 import useSWR from 'swr'
 import { Product } from '@/models/interfaces'
 import ProdutoCard from '@/components/ProdutoCard/ProdutoCard'
+import Link from 'next/link'
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function ProdutosPage() {
-    const [isFavorite, setIsFavorite] = useState(false);
     const { data, error, isLoading } = useSWR<Product[]>('https://deisishop.pythonanywhere.com/products', fetcher);
 
     const [search, setSearch] = useState("");
@@ -15,6 +15,7 @@ export default function ProdutosPage() {
     const [sortOrder, setSortOrder] = useState("");
     
     const [cart, setCart] = useState<Product[]>([]);
+    const [idsHistorico, setIdsHistorico] = useState<number[]>([])
     
     const [nome, setNome] = useState("");
     const [isStudent, setIsStudent] = useState(false);
@@ -52,6 +53,15 @@ export default function ProdutosPage() {
             setFilteredData([...novaLista]);
         }
     }, [search, data, sortOrder]);
+
+    useEffect (() => {
+        const historico = JSON.parse(localStorage.getItem('recentes') || '[]')
+        setIdsHistorico(historico)
+    }, [])
+
+    const produtosVistos = idsHistorico.map(id => {
+      return data?.find(produto => produto.id === id)
+    }).filter(produto => produto !== undefined);
 
     const addToCart = (product: Product) => {
         setCart([...cart, product]);
@@ -126,6 +136,40 @@ export default function ProdutosPage() {
                     </select>
 
                 </div>
+                {produtosVistos.length > 0 && (
+                    <div className="mt-12 border-t pt-6">
+                        <h2 className="text-xl font-bold mb-4 text-gray-700">
+                            Vistos Recentemente
+                        </h2>
+
+                        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                            {produtosVistos.map((produto) => (
+                                <Link 
+                                    key={produto.id} 
+                                    href={`/produtos/${produto.id}`}
+                                    className="min-w-[140px] w-36 bg-white border rounded-lg p-3 shadow-sm hover:shadow-md transition flex flex-col items-center"
+                                >
+                                    <div className="relative w-full h-20 mb-2">
+                                        <img 
+                                            src={produto.image} 
+                                            alt={produto.title} 
+                                            className="w-full h-full object-contain"
+                                        />
+                                        </div>
+                                        
+                                        <p className="text-xs font-semibold text-center line-clamp-2 text-gray-800">
+                                            {produto.title}
+                                        </p>
+
+                                        <p className="text-xs text-green-600 font-bold mt-1">
+                                            {Number(produto.price).toFixed(2)} €
+                                        </p>
+                                </Link>
+                            ))}
+                        </div>
+
+                    </div>
+                )}
 
                 <div className="text-blue-500 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredData.map((product) => (

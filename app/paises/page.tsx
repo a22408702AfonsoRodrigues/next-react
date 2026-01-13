@@ -1,25 +1,26 @@
 'use client' 
 import React, { useState } from 'react'
-import useSWR from 'swr'
-import { Pais } from '@/models/interfaces'
+import dadosPaises from '@/public/paises.json'
 
-const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function PaisesPage() {
     
-    const { data } = useSWR<Pais[]>('/paises.json', fetcher);
+    return (
+        <div>
+            <h1 className="text-3xl font-bold mb-6">Lista de Países</h1>
 
-    const [search, setSearch] = useState("");
+            <div className= "text-white bg-blue-950 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {dadosPaises.map((pais, index) => (
+                    <div key= {index} className= "flex flex-col">
+                        <p>{pais.name.common}</p>
 
-    const [area, setArea] = useState("");
-
-    let filteredData = data || []
-
-    filteredData = filteredData.filter(pais => pais.name.toLowerCase().includes(search.toLowerCase()))
-
-    if (area) {
-        filteredData = filteredData.filter(pais => pais.area === area)
-    }
-    
-
+                        <p>Area: {Number(pais.area)}</p>
+                        
+                        <p>População: {Number(pais.population)}</p>
+                        
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
 }
